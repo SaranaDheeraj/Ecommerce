@@ -1,10 +1,11 @@
 import { Router, Request, Response } from "express";
-import { signUp } from "../controllers/user";
+import { signIn, signUp } from "../controllers/user";
 
 const router = Router();
 
 //signIn
 //signUp
-router.route("/").post(signUp);
+router.route("/signup").post(signUp);
+router.route("/signin").post(signIn);
 
 export { router };
