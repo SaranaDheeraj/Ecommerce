@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import { product, signIn, signUp } from "../controllers/user";
 import { isLoggedIn } from "../middlewares/user";
 
