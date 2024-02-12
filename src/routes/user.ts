@@ -1,8 +1,10 @@
 import { Router, Request, Response } from "express";
-import { signIn } from "../controllers/user";
+import { signUp } from "../controllers/user";
 
 const router = Router();
 
-router.route("/").get(signIn);
+//signIn
+//signUp
+router.route("/").post(signUp);
 
 export { router };
