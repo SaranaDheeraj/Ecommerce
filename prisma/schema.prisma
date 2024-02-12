@@ -17,13 +17,13 @@ model Users{
   email String @unique
   products Products[]
   reviews Reviews[]
-  cart Cart?
+  cart Cart[]
 }
 
 model Products{
   id Int @id @default(autoincrement())
   name String 
-  price Int
+  price Decimal
   image String
   rating Int
   categoryId Int
@@ -54,7 +54,7 @@ model Cart{
   name String
   quantity Int
   price Decimal
-  userId Int @unique
+  userId Int
   user Users @relation(fields: [userId],references: [id])
 }
 
