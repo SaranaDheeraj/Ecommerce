@@ -1,7 +1,20 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import useProducts from "./hooks/useProducts";
+import { Product } from "./interface";
+
 function App() {
+  const products: Product[] = useProducts();
   return (
     <div>
-      <h1>hello</h1>
+      {products.map((product, i) => (
+        <div key={i}>
+          <img src={product.image} alt="" />
+          <h1>
+            {product.name} - {product.price}
+          </h1>
+        </div>
+      ))}
     </div>
   );
 }
