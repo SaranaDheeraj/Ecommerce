@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
-import { signIn, signUp } from "../controllers/user";
+import { product, signIn, signUp } from "../controllers/user";
+import { isLoggedIn } from "../middlewares/user";
 
 const router = Router();
 
@@ -7,5 +8,6 @@ const router = Router();
 //signUp
 router.route("/signup").post(signUp);
 router.route("/signin").post(signIn);
+router.route("/products").post(isLoggedIn, product);
 
 export { router };

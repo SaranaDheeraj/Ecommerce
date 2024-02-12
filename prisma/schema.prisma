@@ -24,6 +24,7 @@ model Products{
   id Int @id @default(autoincrement())
   name String 
   price Int
+  image String
   rating Int
   categoryId Int
   category Categories @relation(fields: [categoryId],references: [id])

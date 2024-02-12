@@ -46,4 +46,36 @@ async function signIn(req: any, res: any) {
   }
 }
 
-export { signUp, signIn };
+async function product(req: any, res: any) {
+  const { name, price, image, rating, category } = req.body;
+  const categoryRecord = await prisma.categories.findFirst({
+    where: {
+      category,
+    },
+    select: {
+      id: true,
+    },
+  });
+  if (categoryRecord) {
+    try {
+      await prisma.products.create({
+        data: {
+          name,
+          price,
+          rating,
+          image,
+          userId: req.userId,
+          categoryId: categoryRecord.id,
+        },
+      });
+
+      res.status(200).json({ msg: "product created successfully!" });
+    } catch (error) {
+      res.status(400).json({ msg: "Internal server error!" });
+    }
+  } else {
+    res.status(400).json({ msg: "Category not found" });
+  }
+}
+
+export { signUp, signIn, product };
