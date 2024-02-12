@@ -36,6 +36,7 @@ model Products{
 model Reviews{
   id Int @id @default(autoincrement())
   description String
+  rating Int
   productId Int
   product Products @relation(fields: [productId],references: [id])
   userId Int
