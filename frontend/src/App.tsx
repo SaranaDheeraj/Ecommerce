@@ -1,21 +1,20 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import useProducts from "./hooks/useProducts";
-import { Product } from "./interface";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Shop from "./pages/Shop";
+import User from "./pages/User";
 function App() {
-  const products: Product[] = useProducts();
   return (
-    <div>
-      {products.map((product, i) => (
-        <div key={i}>
-          <img src={product.image} alt="" />
-          <h1>
-            {product.name} - {product.price}
-          </h1>
-        </div>
-      ))}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/shopnow" element={<Shop />} />
+        <Route path="/user" element={<User />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
