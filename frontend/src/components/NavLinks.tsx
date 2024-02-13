@@ -35,7 +35,7 @@ const NavLinks = () => {
       </Box>
       <Menu>
         <MenuButton as="a">
-          ACCOUNT <ChevronDownIcon />
+          ACCOUNT <ChevronDownIcon width="20px" height="25px" />
         </MenuButton>
         <MenuList fontSize="xs">
           <MenuGroup>

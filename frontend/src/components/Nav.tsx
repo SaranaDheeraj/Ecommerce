@@ -14,6 +14,7 @@ const Nav = () => {
       fontSize="sm"
       alignItems="center"
       color="gray.600"
+      bg="gray.50"
       p={5}
     >
       <Box width="150px">
