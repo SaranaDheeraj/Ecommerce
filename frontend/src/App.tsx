@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, NavLink, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -18,7 +18,7 @@ function App() {
         <Route path="/shopnow" element={<Shop />} />
         <Route path="/user" element={<User />} />
       </Routes>
-      <footer>this is a footer</footer>
+      <footer></footer>
     </BrowserRouter>
   );
 }

@@ -1,14 +1,6 @@
-import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Menu,
-  MenuButton,
-  MenuGroup,
-  MenuItem,
-  MenuList,
-} from "@chakra-ui/react";
-import { Link, NavLink } from "react-router-dom";
-import { CiShoppingCart } from "react-icons/ci";
+import { Box, Image } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+
 import SideDrawer from "./SideDrawer";
 import NavLinks from "./NavLinks";
 
@@ -24,8 +16,10 @@ const Nav = () => {
       color="gray.600"
       p={5}
     >
-      <Box>
-        <Link to="/">LOGO</Link>
+      <Box width="150px">
+        <Link to="/">
+          <Image src="../public/logo.png" />
+        </Link>
       </Box>
       <Box display={{ base: "none", lg: "block" }}>
         <NavLinks />
