@@ -19,7 +19,7 @@ const Nav = () => {
     >
       <Box width="150px">
         <Link to="/">
-          <Image src="../public/logo.png" />
+          <Image src="/logo.png" />
         </Link>
       </Box>
       <Box display={{ base: "none", lg: "block" }}>

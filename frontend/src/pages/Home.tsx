@@ -3,8 +3,13 @@ import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 
 const Home = () => {
   return (
-    <Box height="100vh" display="flex" alignItems="center" bg="gray.50">
-      <Box p="50px" width="60%">
+    <Box
+      display="flex"
+      flexDirection={{ base: "column", md: "row" }}
+      alignItems="center"
+      bg="gray.50"
+    >
+      <Box p="50px" width={{ base: "100%", md: "60%" }}>
         <Heading
           as="h1"
           size={{ base: "2xl", sm: "3xl" }}
@@ -32,7 +37,7 @@ const Home = () => {
         </Button>
       </Box>
       <Box>
-        <Image src="../public/homeimage.png" />
+        <Image src="/homeimage.png" />
       </Box>
     </Box>
   );
