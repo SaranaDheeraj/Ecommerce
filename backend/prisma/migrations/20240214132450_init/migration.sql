@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Products" ADD COLUMN     "Discount" DECIMAL(65,30) NOT NULL DEFAULT 35;

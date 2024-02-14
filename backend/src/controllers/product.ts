@@ -68,4 +68,15 @@ async function allReviews(req: any, res: any) {
   }
 }
 
-export { allProducts, product, addReview, allReviews };
+async function getFourProducts(req: any, res: any) {
+  try {
+    const products = await prisma.products.findMany({
+      take: 4,
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400).json({ msg: "Unable to retrieve products!" });
+  }
+}
+
+export { allProducts, product, addReview, allReviews, getFourProducts };

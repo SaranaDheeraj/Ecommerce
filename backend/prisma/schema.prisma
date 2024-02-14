@@ -24,6 +24,7 @@ model Products{
   id Int @id @default(autoincrement())
   name String 
   price Decimal
+  Discount Decimal @default(35)
   image String
   rating Int
   categoryId Int
@@ -57,6 +58,8 @@ model Cart{
   userId Int
   user Users @relation(fields: [userId],references: [id])
 }
+
+
 
 
 
