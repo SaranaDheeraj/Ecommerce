@@ -1,7 +1,7 @@
 * {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.25px;
 }
 
 nav a:hover,
@@ -16,4 +16,9 @@ button:hover {
 .footer a:hover {
   color: #fa5252;
   cursor: pointer;
+}
+
+.offer,
+.order button {
+  background-color: #f2295b;
 }
