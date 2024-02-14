@@ -6,6 +6,7 @@ import Shop from "./pages/Shop";
 import User from "./pages/User";
 import Nav from "./components/Nav";
 import "./App.css";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/shopnow" element={<Shop />} />
         <Route path="/user" element={<User />} />
       </Routes>
-      <footer></footer>
+      <Footer />
     </BrowserRouter>
   );
 }
