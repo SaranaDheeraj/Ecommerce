@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Menu,
   MenuButton,
   MenuGroup,
@@ -44,13 +45,25 @@ const NavLinks = () => {
           </MenuGroup>
         </MenuList>
       </Menu>
-      <Box>
-        <NavLink to="/cart">
-          <Box display="flex" gap={2}>
+      <Box
+        display="flex"
+        gap={3}
+        flexDirection={{ base: "column", md: "row" }}
+        // justifyContent="center"
+        alignItems="flex-start"
+      >
+        <Button variant="ghost" color="gray.600">
+          <Box display="flex" gap={2} alignItems="center">
             <Text>CART</Text>
             <CiShoppingCart size={25} color="red" />
           </Box>
-        </NavLink>
+        </Button>
+        <Button bg="red.200" color="gray.600">
+          <Text>SIGN UP</Text>
+        </Button>
+        <Button bg="green.200" color="gray.600">
+          <Text>SIGN IN</Text>
+        </Button>
       </Box>
     </Box>
   );

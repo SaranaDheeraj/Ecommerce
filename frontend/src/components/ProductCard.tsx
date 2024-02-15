@@ -15,7 +15,7 @@ import { Product as ProductInterface } from "../interface";
 const ProductCard = ({ product }: { product: ProductInterface }) => {
   return (
     <Card
-      maxW="sm"
+      maxW="300px"
       color="gray.700"
       cursor="pointer"
       _hover={{ boxShadow: "2xl" }}
@@ -23,8 +23,8 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
       <CardBody>
         <Center>
           <Image
-            maxH="300px"
-            minW="300px"
+            maxH="250px"
+            minW="250px"
             borderRadius="lg"
             src={product.image}
           />

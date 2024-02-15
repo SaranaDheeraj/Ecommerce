@@ -68,10 +68,10 @@ async function allReviews(req: any, res: any) {
   }
 }
 
-async function getFourProducts(req: any, res: any) {
+async function getThreeProducts(req: any, res: any) {
   try {
     const products = await prisma.products.findMany({
-      take: 4,
+      take: 3,
     });
     res.status(200).json(products);
   } catch (error) {
@@ -79,4 +79,4 @@ async function getFourProducts(req: any, res: any) {
   }
 }
 
-export { allProducts, product, addReview, allReviews, getFourProducts };
+export { allProducts, product, addReview, allReviews, getThreeProducts };

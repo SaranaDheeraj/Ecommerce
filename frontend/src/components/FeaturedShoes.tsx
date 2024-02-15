@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, Center, SimpleGrid } from "@chakra-ui/react";
 import useProducts from "../hooks/useProducts";
 import { Product } from "../interface";
 import ProductCard from "./ProductCard";
@@ -7,11 +7,11 @@ const FeaturedShoes = () => {
   const products: Product[] = useProducts();
 
   return (
-    <SimpleGrid minChildWidth="xs" gap={3}>
+    <SimpleGrid minChildWidth="300px" gap={3}>
       {products.map((product) => (
-        <Box key={product.id}>
+        <Center key={product.id}>
           <ProductCard product={product} />
-        </Box>
+        </Center>
       ))}
     </SimpleGrid>
   );
