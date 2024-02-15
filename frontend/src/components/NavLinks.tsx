@@ -58,11 +58,15 @@ const NavLinks = () => {
             <CiShoppingCart size={25} color="red" />
           </Box>
         </Button>
-        <Button bg="red.200" color="gray.600">
-          <Text>SIGN UP</Text>
+        <Button bg="red.300" color="gray.600" _hover={{ bg: "red.200" }}>
+          <NavLink to="/signup">
+            <Text>SIGN UP</Text>
+          </NavLink>
         </Button>
-        <Button bg="green.200" color="gray.600">
-          <Text>SIGN IN</Text>
+        <Button bg="green.300" color="gray.600" _hover={{ bg: "green.200" }}>
+          <NavLink to="/signin">
+            <Text>SIGN IN</Text>
+          </NavLink>
         </Button>
       </Box>
     </Box>
