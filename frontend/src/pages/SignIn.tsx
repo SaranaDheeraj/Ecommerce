@@ -10,13 +10,19 @@ import {
   Heading,
   Image,
   Center,
+  useToast,
 } from "@chakra-ui/react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
-  email: z.string().email({ message: "email is not valid" }),
+  username: z
+    .string()
+    .min(4, { message: "username should contain at least 4 characters" })
+    .max(20),
   password: z
     .string()
     .min(8, { message: "password must be at least 8 characters" }),
@@ -25,6 +31,8 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 const SignIn = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -33,8 +41,32 @@ const SignIn = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/signin",
+        data
+      );
+      localStorage.setItem("token", response.data.token);
+      toast({
+        position: "top-right",
+        title: "User Logged In successfully",
+        description: response.data.msg,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/");
+    } catch (error: any) {
+      toast({
+        position: "top-right",
+        title: "Error Occured",
+        description: error.response.data.msg,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -59,11 +91,15 @@ const SignIn = () => {
               Sign In!
             </Heading>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <FormControl isInvalid={errors.email} mb={4}>
-                <FormLabel htmlFor="email">Email</FormLabel>
-                <Input id="email" placeholder="email" {...register("email")} />
+              <FormControl isInvalid={errors.username} mb={4}>
+                <FormLabel htmlFor="usernmae">Username</FormLabel>
+                <Input
+                  id="username"
+                  placeholder="username"
+                  {...register("username")}
+                />
                 <FormErrorMessage>
-                  {errors.email && errors.email.message}
+                  {errors.username && errors.username.message}
                 </FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={errors.password}>
@@ -84,7 +120,7 @@ const SignIn = () => {
                 isLoading={isSubmitting}
                 type="submit"
               >
-                Sign Up
+                Sign In
               </Button>
             </form>
           </Box>

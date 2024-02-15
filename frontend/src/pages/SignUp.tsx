@@ -10,10 +10,13 @@ import {
   Heading,
   Image,
   Center,
+  useToast,
 } from "@chakra-ui/react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   username: z
@@ -29,16 +32,41 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 const SignUp = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting }, // Access formState for errors
+    formState: { errors, isSubmitting },
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/signup",
+        data
+      );
+      toast({
+        position: "top-right",
+        title: "Account created.",
+        description: response.data.msg,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      navigate("/signin");
+    } catch (error: any) {
+      toast({
+        position: "top-right",
+        title: "Error",
+        description: error.response.data.msg,
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (

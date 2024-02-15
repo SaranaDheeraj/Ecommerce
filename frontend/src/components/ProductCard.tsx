@@ -16,6 +16,7 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
   return (
     <Card
       maxW="300px"
+      minH="500px"
       color="gray.700"
       cursor="pointer"
       _hover={{ boxShadow: "2xl" }}

@@ -15,7 +15,7 @@ async function signUp(req: any, res: any) {
     },
   });
   if (userExists) {
-    return res.status(400).json({ msg: "Username or email already exists" });
+    return res.status(409).json({ msg: "Username or Email already exists" });
   }
 
   try {
@@ -31,16 +31,24 @@ async function signUp(req: any, res: any) {
 
 async function signIn(req: any, res: any) {
   const { username, password } = req.body;
+  console.log(password);
   try {
-    await prisma.users.findUnique({
+    const user = await prisma.users.findUnique({
       where: {
         username,
-        password,
       },
     });
 
-    const token = jwt.sign({ username }, secret);
-    res.status(200).json({ token });
+    if (!user) {
+      return res.status(400).json({ msg: "username  not found" });
+    }
+
+    if (user.password === password) {
+      const token = jwt.sign({ username }, secret);
+      return res.status(200).json({ token });
+    } else {
+      return res.status(400).json({ msg: "username or password incorrect" });
+    }
   } catch (e: any) {
     res.status(400).json({ message: e.message });
   }
