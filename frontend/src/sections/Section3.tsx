@@ -7,7 +7,6 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import Product from "../components/ProductCard";
 import FeaturedShoes from "../components/FeaturedShoes";
 
 const Section3 = () => {
