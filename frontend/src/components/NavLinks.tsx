@@ -49,23 +49,22 @@ const NavLinks = () => {
         display="flex"
         gap={3}
         flexDirection={{ base: "column", md: "row" }}
-        // justifyContent="center"
         alignItems="flex-start"
       >
-        <Button variant="ghost" color="gray.600">
+        <Button className="cart" variant="ghost" color="gray.600">
           <Box display="flex" gap={2} alignItems="center">
             <Text>CART</Text>
             <CiShoppingCart size={25} color="red" />
           </Box>
         </Button>
-        <Button bg="red.300" color="gray.600" _hover={{ bg: "red.200" }}>
+        <Button bg="red.300" _hover={{ bg: "red.200" }}>
           <NavLink to="/signup">
-            <Text>SIGN UP</Text>
+            <Text className="signup">SIGN UP</Text>
           </NavLink>
         </Button>
-        <Button bg="green.300" color="gray.600" _hover={{ bg: "green.200" }}>
+        <Button bg="green.300" _hover={{ bg: "green.200" }}>
           <NavLink to="/signin">
-            <Text>SIGN IN</Text>
+            <Text className="signin">SIGN IN</Text>
           </NavLink>
         </Button>
       </Box>

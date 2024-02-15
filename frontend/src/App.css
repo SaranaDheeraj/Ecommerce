@@ -6,10 +6,14 @@
 
 nav a:hover,
 a.active,
-button:hover {
+nav button.cart:hover {
   color: #fa5252;
 }
 
+.signin,
+.signup {
+  color: #4a5568;
+}
 .footer a {
   display: block;
 }
