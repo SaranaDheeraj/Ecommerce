@@ -16,7 +16,10 @@ import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { signedInState, toastValue } from "../recoil/atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useEffect } from "react";
 
 const schema = z.object({
   username: z
@@ -34,6 +37,12 @@ type FormFields = z.infer<typeof schema>;
 const SignUp = () => {
   const toast = useToast();
   const navigate = useNavigate();
+
+  if (useRecoilValue(signedInState)) {
+    const setToastValue = useSetRecoilState(toastValue);
+    useEffect(() => setToastValue((value) => "You are already Signed in!"), []);
+    return <Navigate to="/" />;
+  }
   const {
     register,
     handleSubmit,

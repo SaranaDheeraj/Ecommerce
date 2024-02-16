@@ -8,10 +8,8 @@ import {
   MenuItem,
   MenuList,
   Text,
-  useDisclosure,
-  useToast,
+  useBreakpointValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
 
 import { CiShoppingCart } from "react-icons/ci";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -21,18 +19,13 @@ import { signedInState } from "../recoil/atom";
 const NavLinks = ({ close }) => {
   const navigate = useNavigate();
   const [signedIn, setSignedIn] = useRecoilState(signedInState);
-  const logOut = () => {
-    localStorage.removeItem("token");
-    setSignedIn(false);
-    close();
-    navigate("/");
-  };
-  const signIn = () => {
-    close();
-  };
-  const signUp = () => {
-    close();
-  };
+  const breakpoint = useBreakpointValue({
+    base: "base",
+    sm: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+  });
 
   return (
     <Box
@@ -91,21 +84,32 @@ const NavLinks = ({ close }) => {
           </Box>
         </Button>
         {!signedIn && (
-          <Button bg="red.300" _hover={{ bg: "red.200" }} onClick={signUp}>
+          <Button bg="red.300" _hover={{ bg: "red.200" }} onClick={close}>
             <NavLink to="/signup">
               <Text className="signup">SIGN UP</Text>
             </NavLink>
           </Button>
         )}
         {!signedIn && (
-          <Button bg="green.300" _hover={{ bg: "green.200" }} onClick={signIn}>
+          <Button bg="green.300" _hover={{ bg: "green.200" }} onClick={close}>
             <NavLink to="/signin">
               <Text className="signin">SIGN IN</Text>
             </NavLink>
           </Button>
         )}
         {signedIn && (
-          <Button bg="red.300" _hover={{ bg: "red.200" }} onClick={logOut}>
+          <Button
+            bg="red.300"
+            _hover={{ bg: "red.200" }}
+            onClick={() => {
+              localStorage.removeItem("token");
+              setSignedIn(false);
+              if (breakpoint == "sm" || breakpoint == "md") {
+                close();
+              }
+              navigate("/");
+            }}
+          >
             <Text className="signin">LOG OUT</Text>
           </Button>
         )}
