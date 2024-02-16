@@ -16,10 +16,10 @@ async function getCart(req: any, res: any) {
 }
 
 async function addToCart(req: any, res: any) {
-  const { name, quantity, price } = req.body;
+  const { name, quantity, price, productId } = req.body;
   try {
     const item = await prisma.cart.create({
-      data: { name, quantity, price, userId: req.userId },
+      data: { name, quantity, price, userId: req.userId, productId },
     });
     res.status(200).json({ msg: "added to cart successfully" });
   } catch (e) {

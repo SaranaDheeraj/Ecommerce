@@ -17,6 +17,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { signedInState } from "../recoil/atom";
 
 const schema = z.object({
   username: z
@@ -40,6 +42,7 @@ const SignIn = () => {
   } = useForm<FormFields>({
     resolver: zodResolver(schema),
   });
+  const setSignedIn = useSetRecoilState(signedInState);
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
@@ -48,6 +51,7 @@ const SignIn = () => {
         data
       );
       localStorage.setItem("token", response.data.token);
+      setSignedIn((value) => true);
       toast({
         position: "top-right",
         title: "User Logged In successfully",

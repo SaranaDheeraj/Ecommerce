@@ -31,7 +31,6 @@ async function signUp(req: any, res: any) {
 
 async function signIn(req: any, res: any) {
   const { username, password } = req.body;
-  console.log(password);
   try {
     const user = await prisma.users.findUnique({
       where: {

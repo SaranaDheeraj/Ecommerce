@@ -9,16 +9,21 @@ import {
   MenuList,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 import { CiShoppingCart } from "react-icons/ci";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { signedInState } from "../recoil/atom";
 
 const NavLinks = ({ close }) => {
   const navigate = useNavigate();
-  const signedIn = localStorage.getItem("token");
+  const [signedIn, setSignedIn] = useRecoilState(signedInState);
   const logOut = () => {
     localStorage.removeItem("token");
+    setSignedIn(false);
     close();
     navigate("/");
   };
