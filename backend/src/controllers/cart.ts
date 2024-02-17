@@ -16,13 +16,32 @@ async function getCart(req: any, res: any) {
 }
 
 async function addToCart(req: any, res: any) {
-  const { name, quantity, price, productId, userId } = req.body;
+  const { name, quantity, price, productId } = req.body;
   try {
-    const item = await prisma.cart.create({
-      data: { name, quantity, price, userId, productId },
+    const items = await prisma.cart.findMany({
+      where: {
+        userId: req.userId,
+      },
     });
 
-    res.status(200).json({ msg: "added to cart successfully", item });
+    var exists = items.find((item) => item.productId == productId);
+
+    if (exists) {
+      const updatedItem = await prisma.cart.update({
+        where: { id: exists.id },
+        data: { quantity: exists.quantity + quantity }, // Update quantity
+      });
+      res
+        .status(200)
+        .json({ msg: "added to cart successfully", exists: updatedItem });
+    } else {
+      const newItem = await prisma.cart.create({
+        data: { name, quantity, price, userId: req.userId, productId },
+      });
+      res
+        .status(200)
+        .json({ msg: "added to cart successfully", exists: newItem });
+    }
   } catch (e) {
     res.status(400).json({ msg: e });
   }

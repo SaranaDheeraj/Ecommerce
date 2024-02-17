@@ -12,16 +12,14 @@ import {
 } from "@chakra-ui/react";
 import StarRating from "./StarRating";
 import { Product as ProductInterface } from "../interface";
-import { cartItems, signedInState, userId } from "../recoil/atom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { signedInState } from "../recoil/atom";
+import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ProductCard = ({ product }: { product: ProductInterface }) => {
   const navigate = useNavigate();
   const signedIn = useRecoilValue(signedInState);
-  const [items, setItems] = useRecoilState(cartItems);
-  const userid: number = useRecoilValue(userId);
   const toast = useToast();
 
   const addToCart = async () => {
@@ -40,7 +38,6 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
       const response = await axios.post(
         "http://localhost:3000/cart",
         {
-          userId: userid,
           productId: product.id,
           name: product.name,
           quantity: 1,
@@ -52,7 +49,7 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
           },
         }
       );
-      setItems((items) => [...items, response.data.item]);
+
       toast({
         position: "top-right",
         title: response.data.msg,

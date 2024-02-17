@@ -7,13 +7,17 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Input,
 } from "@chakra-ui/react";
-import { useRecoilValue } from "recoil";
-import { cartItems } from "../recoil/atom";
+import { useRecoilValueLoadable } from "recoil";
+import { userCartItems } from "../recoil/atom";
 
 const Cart = ({ isOpen, onOpen, onClose, btnRef }) => {
-  const items = useRecoilValue(cartItems);
+  const loaded = useRecoilValueLoadable(userCartItems);
+
+  let items = [];
+  if (loaded.state === "hasValue") {
+    items = loaded.contents;
+  }
   return (
     <Drawer
       isOpen={isOpen}
@@ -29,7 +33,9 @@ const Cart = ({ isOpen, onOpen, onClose, btnRef }) => {
 
         <DrawerBody>
           {items.map((item, i) => (
-            <p key={i}>{item.name}</p>
+            <p key={i}>
+              {item.name}-{item.quantity}
+            </p>
           ))}
         </DrawerBody>
 
