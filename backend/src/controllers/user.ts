@@ -44,7 +44,7 @@ async function signIn(req: any, res: any) {
 
     if (user.password === password) {
       const token = jwt.sign({ username }, secret);
-      return res.status(200).json({ token });
+      return res.status(200).json({ token, id: user.id });
     } else {
       return res.status(400).json({ msg: "username or password incorrect" });
     }

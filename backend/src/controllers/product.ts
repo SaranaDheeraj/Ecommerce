@@ -11,7 +11,7 @@ async function allProducts(req: any, res: any) {
   }
 }
 
-async function product(req: any, res: any) {
+async function getProduct(req: any, res: any) {
   const { id } = req.params;
   try {
     const product = await prisma.products.findFirst({
@@ -79,4 +79,4 @@ async function getThreeProducts(req: any, res: any) {
   }
 }
 
-export { allProducts, product, addReview, allReviews, getThreeProducts };
+export { allProducts, getProduct, addReview, allReviews, getThreeProducts };

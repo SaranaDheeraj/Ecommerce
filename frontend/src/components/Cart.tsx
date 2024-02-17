@@ -9,8 +9,11 @@ import {
   DrawerOverlay,
   Input,
 } from "@chakra-ui/react";
+import { useRecoilValue } from "recoil";
+import { cartItems } from "../recoil/atom";
 
 const Cart = ({ isOpen, onOpen, onClose, btnRef }) => {
+  const items = useRecoilValue(cartItems);
   return (
     <Drawer
       isOpen={isOpen}
@@ -25,7 +28,9 @@ const Cart = ({ isOpen, onOpen, onClose, btnRef }) => {
         <DrawerHeader>Create your account</DrawerHeader>
 
         <DrawerBody>
-          <Input placeholder="Type here..." />
+          {items.map((item, i) => (
+            <p key={i}>{item.name}</p>
+          ))}
         </DrawerBody>
 
         <DrawerFooter>

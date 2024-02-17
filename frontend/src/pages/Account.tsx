@@ -1,4 +1,4 @@
-import { Button, Image, Input } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 

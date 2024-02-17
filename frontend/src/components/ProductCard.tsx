@@ -8,11 +8,68 @@ import {
   Image,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import StarRating from "./StarRating";
 import { Product as ProductInterface } from "../interface";
+import { cartItems, signedInState, userId } from "../recoil/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ProductCard = ({ product }: { product: ProductInterface }) => {
+  const navigate = useNavigate();
+  const signedIn = useRecoilValue(signedInState);
+  const [items, setItems] = useRecoilState(cartItems);
+  const userid: number = useRecoilValue(userId);
+  const toast = useToast();
+
+  const addToCart = async () => {
+    if (!signedIn) {
+      toast({
+        position: "top-right",
+        title: "Sign In to add Items to cart!",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return navigate("/signin");
+    }
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:3000/cart",
+        {
+          userId: userid,
+          productId: product.id,
+          name: product.name,
+          quantity: 1,
+          price: product.price,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setItems((items) => [...items, response.data.item]);
+      toast({
+        position: "top-right",
+        title: response.data.msg,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error: any) {
+      toast({
+        position: "top-right",
+        title: error.response.data.msg,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
   return (
     <Card
       maxW="300px"
@@ -49,6 +106,7 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
           <Button
             colorScheme="teal"
             _hover={{ color: "white", bg: "teal.400" }}
+            onClick={addToCart}
           >
             ADD TO CART!
           </Button>

@@ -124,6 +124,7 @@ const NavLinks = ({ close }) => {
             _hover={{ bg: "red.200" }}
             onClick={() => {
               localStorage.removeItem("token");
+              localStorage.removeItem("id");
               setSignedIn(false);
               if (breakpoint == "sm" || breakpoint == "md") {
                 close();
