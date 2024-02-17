@@ -1,20 +1,18 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  Menu,
-  MenuButton,
-  MenuGroup,
-  MenuItem,
-  MenuList,
   Text,
   useBreakpointValue,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 
 import { CiShoppingCart } from "react-icons/ci";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { signedInState } from "../recoil/atom";
+import React from "react";
+import Cart from "./Cart";
 
 const NavLinks = ({ close }) => {
   const navigate = useNavigate();
@@ -26,6 +24,27 @@ const NavLinks = ({ close }) => {
     lg: "lg",
     xl: "xl",
   });
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+
+  const handleCart = () => {
+    if (!signedIn) {
+      if (breakpoint == "sm" || breakpoint == "md") {
+        close();
+      }
+      toast({
+        position: "top-right",
+        title: "Sign In to Access Cart!",
+
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return navigate("/signin");
+    }
+    onOpen();
+  };
 
   return (
     <Box
@@ -55,17 +74,12 @@ const NavLinks = ({ close }) => {
           CONTACT
         </NavLink>
       </Box>
-      <Menu>
-        <MenuButton as="a">
-          ACCOUNT <ChevronDownIcon width="20px" height="25px" />
-        </MenuButton>
-        <MenuList fontSize="xs">
-          <MenuGroup>
-            <MenuItem onClick={close}>My Account</MenuItem>
-            <MenuItem onClick={close}>Cart</MenuItem>
-          </MenuGroup>
-        </MenuList>
-      </Menu>
+      <Box>
+        <NavLink to="/account" onClick={close}>
+          ACCOUNT
+        </NavLink>
+      </Box>
+
       <Box
         display="flex"
         gap={3}
@@ -76,13 +90,20 @@ const NavLinks = ({ close }) => {
           className="cart"
           variant="ghost"
           color="gray.600"
-          onClick={close}
+          onClick={handleCart}
         >
           <Box display="flex" gap={2} alignItems="center">
             <Text>CART</Text>
             <CiShoppingCart size={25} color="red" />
           </Box>
         </Button>
+        <Cart
+          onOpen={onOpen}
+          onClose={onClose}
+          isOpen={isOpen}
+          btnRef={btnRef}
+        />
+
         {!signedIn && (
           <Button bg="red.300" _hover={{ bg: "red.200" }} onClick={close}>
             <NavLink to="/signup">
@@ -107,6 +128,13 @@ const NavLinks = ({ close }) => {
               if (breakpoint == "sm" || breakpoint == "md") {
                 close();
               }
+              toast({
+                position: "top-right",
+                title: "Logged Out Successfully.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+              });
               navigate("/");
             }}
           >

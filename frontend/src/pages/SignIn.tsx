@@ -36,11 +36,6 @@ type FormFields = z.infer<typeof schema>;
 const SignIn = () => {
   const toast = useToast();
   const navigate = useNavigate();
-  if (useRecoilValue(signedInState)) {
-    const setToastValue = useSetRecoilState(toastValue);
-    useEffect(() => setToastValue((value) => "You are already signed in!"), []);
-    return <Navigate to="/" />;
-  } else {
     const {
       register,
       handleSubmit,
@@ -138,7 +133,6 @@ const SignIn = () => {
         </Card>
       </Box>
     );
-  }
 };
 
 export default SignIn;

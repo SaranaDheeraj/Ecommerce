@@ -37,7 +37,7 @@ const Section1 = () => {
         </Button>
       </Box>
       <Box>
-        <Image src="/homeimage.png" />
+        <Image src="http://res.cloudinary.com/saranadheeraj/image/upload/v1708164299/bbguqf016npfqi0ve484.png" />
       </Box>
     </Box>
   );

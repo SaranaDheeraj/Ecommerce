@@ -10,7 +10,7 @@ const Section2 = () => {
         flexDirection={{ base: "column-reverse", md: "row" }}
       >
         <Box width={{ base: "100%", md: "50%" }}>
-          <Image src="/imgs/offer.png" />
+          <Image src="http://res.cloudinary.com/saranadheeraj/image/upload/v1708164345/ijtwxlw6acn4jzdllxcg.png" />
         </Box>
         <Box
           width={{ base: "100%", md: "50%" }}
