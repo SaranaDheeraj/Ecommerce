@@ -70,4 +70,15 @@ async function updateItem(req: any, res: any) {
   }
 }
 
-export { getCart, addToCart, updateItem };
+async function deleteItem(req: any, res: any) {
+  const { id } = req.params;
+  try {
+    const deleteItem = await prisma.cart.delete({
+      where: { id: parseInt(id) },
+    });
+    res.status(200).json({ msg: "Deleted Item successfully" });
+  } catch (e) {
+    res.status(400).json({ msg: "Something went wrong!" });
+  }
+}
+export { getCart, addToCart, updateItem, deleteItem };

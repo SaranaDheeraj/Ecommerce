@@ -2,6 +2,7 @@ import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
+  CloseButton,
   Flex,
   Image,
   Spacer,
@@ -10,9 +11,12 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { cartItem } from "../recoil/atom";
 
 const CartItem = ({ item }: any) => {
   const [quantity, setQuantity] = useState(item.quantity);
+  const [items, setItems] = useRecoilState(cartItem);
   const token = localStorage.getItem("token");
   const toast = useToast();
   const incrementQuantity = async () => {
@@ -66,9 +70,37 @@ const CartItem = ({ item }: any) => {
           duration: 3000,
           isClosable: true,
         });
-        // Rollback the local state change if the request fails
         setQuantity(quantity + 1);
       }
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/cart/${item.id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        position: "top-right",
+        title: response.data.msg,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setItems((items) => items.filter((i) => i.id != item.id));
+    } catch (e) {
+      toast({
+        position: "top-right",
+        title: "Something went wrong!",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
@@ -78,23 +110,24 @@ const CartItem = ({ item }: any) => {
       <Box w="80%" pl={3}>
         <Text mb={2}>{item.name}</Text>
         <Flex alignItems="center">
-          <Button size="sm" p={0} m={0} onClick={incrementQuantity}>
-            <AddIcon />
+          <Button size="sm" p={0} onClick={decrementQuantity}>
+            <MinusIcon />
           </Button>
           <Text maxH="20px" mx={2}>
             {quantity}
           </Text>
-          <Button size="sm" p={0} onClick={decrementQuantity}>
-            <MinusIcon />
+          <Button size="sm" p={0} m={0} onClick={incrementQuantity}>
+            <AddIcon />
           </Button>
           <Spacer />
           <Text>
             ({item.price}$ x {quantity})
           </Text>
           <Spacer />
-          <Text fontWeight="bold" ml={2}>
+          <Text fontWeight="bold" ml={2} mr={4}>
             - {item.price * quantity}$
           </Text>
+          <CloseButton onClick={handleDelete} />
         </Flex>
       </Box>
     </Box>

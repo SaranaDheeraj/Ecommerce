@@ -13,14 +13,14 @@ import {
 import StarRating from "./StarRating";
 import { Product as ProductInterface } from "../interface";
 import { cartItem, signedInState } from "../recoil/atom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ProductCard = ({ product }: { product: ProductInterface }) => {
   const navigate = useNavigate();
   const signedIn = useRecoilValue(signedInState);
-  const setItems = useSetRecoilState(cartItem);
+  const [items, setItems] = useRecoilState(cartItem);
   const toast = useToast();
 
   const addToCart = async () => {
@@ -52,12 +52,17 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
         }
       );
 
-      const items = await axios.get("http://localhost:3000/cart", {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
-      setItems(items.data);
+      const itemIndex = items.findIndex(
+        (item) => item.id == response.data.exists.id
+      );
+
+      if (itemIndex != -1) {
+        const updatedItems = [...items];
+        updatedItems[itemIndex] = response.data.exists;
+        setItems(updatedItems);
+      } else {
+        setItems([...items, response.data.exists]);
+      }
 
       toast({
         position: "top-right",
