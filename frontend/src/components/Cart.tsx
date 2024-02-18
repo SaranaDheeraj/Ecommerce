@@ -1,50 +1,42 @@
 import {
-  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
+  Spacer,
+  Text,
 } from "@chakra-ui/react";
-import { useRecoilValueLoadable } from "recoil";
-import { userCartItems } from "../recoil/atom";
+import { useRecoilValue } from "recoil";
+import { cartItem } from "../recoil/atom";
+import CartItem from "./CartItem";
 
 const Cart = ({ isOpen, onOpen, onClose, btnRef }) => {
-  const loaded = useRecoilValueLoadable(userCartItems);
+  const items = useRecoilValue(cartItem);
 
-  let items = [];
-  if (loaded.state === "hasValue") {
-    items = loaded.contents;
-  }
   return (
     <Drawer
       isOpen={isOpen}
       placement="right"
-      size="sm"
+      size="lg"
       onClose={onClose}
       finalFocusRef={btnRef}
     >
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader>Create your account</DrawerHeader>
+        <DrawerHeader>Items in My Cart!</DrawerHeader>
 
-        <DrawerBody>
+        <DrawerBody p={{ base: "0", md: "2" }}>
+          <Flex p={2} color="gray.600">
+            <Text>ITEMS</Text>
+          </Flex>
           {items.map((item, i) => (
-            <p key={i}>
-              {item.name}-{item.quantity}
-            </p>
+            <CartItem key={i} item={item} />
           ))}
         </DrawerBody>
-
-        <DrawerFooter>
-          <Button variant="outline" mr={3} onClick={onClose}>
-            Cancel
-          </Button>
-          <Button colorScheme="blue">Save</Button>
-        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

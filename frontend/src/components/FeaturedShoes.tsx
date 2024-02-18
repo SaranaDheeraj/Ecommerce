@@ -2,6 +2,7 @@ import { Box, Center, SimpleGrid } from "@chakra-ui/react";
 import useProducts from "../hooks/useProducts";
 import { Product } from "../interface";
 import ProductCard from "./ProductCard";
+import { Suspense } from "react";
 
 const FeaturedShoes = () => {
   const products: Product[] = useProducts();
