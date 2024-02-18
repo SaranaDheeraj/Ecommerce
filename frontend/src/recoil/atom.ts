@@ -10,14 +10,18 @@ export const cartItem = atom({
   key: "cartItem",
   default: selector({
     key: "initialItems",
-    get: async () => {
+    get: async ({ get }) => {
       const token = localStorage.getItem("token");
-      const items = await axios.get("http://localhost:3000/cart", {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
-      return items.data;
+      const signedIn = get(signedInState);
+      if (token) {
+        const items = await axios.get("http://localhost:3000/cart", {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        });
+        return items.data;
+      }
+      return [];
     },
   }),
 });
