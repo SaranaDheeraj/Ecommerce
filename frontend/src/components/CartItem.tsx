@@ -34,6 +34,17 @@ const CartItem = ({ item }: any) => {
             },
           }
         );
+        const itemIndex = items.findIndex(
+          (item) => item.id == response.data.id
+        );
+
+        if (itemIndex != -1) {
+          const updatedItems = [...items];
+          updatedItems[itemIndex] = response.data;
+          setItems(updatedItems);
+        } else {
+          setItems([...items, response.data]);
+        }
       } catch (e) {
         toast({
           position: "top-right",
@@ -62,6 +73,17 @@ const CartItem = ({ item }: any) => {
             },
           }
         );
+        const itemIndex = items.findIndex(
+          (item) => item.id == response.data.id
+        );
+
+        if (itemIndex != -1) {
+          const updatedItems = [...items];
+          updatedItems[itemIndex] = response.data;
+          setItems(updatedItems);
+        } else {
+          setItems([...items, response.data]);
+        }
       } catch (e) {
         toast({
           position: "top-right",

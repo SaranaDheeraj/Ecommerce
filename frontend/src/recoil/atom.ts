@@ -21,3 +21,15 @@ export const cartItem = atom({
     },
   }),
 });
+
+export const total = selector({
+  key: "totalprice",
+  get: ({ get }) => {
+    const items = get(cartItem);
+    return items.reduce(
+      (acc: number, { price, quantity }) =>
+        acc + parseInt(price) * parseInt(quantity),
+      0
+    );
+  },
+});
