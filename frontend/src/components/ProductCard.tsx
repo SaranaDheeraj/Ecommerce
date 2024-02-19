@@ -4,8 +4,10 @@ import {
   Card,
   CardBody,
   Center,
+  Flex,
   Heading,
   Image,
+  Spacer,
   Stack,
   Text,
   useToast,
@@ -84,7 +86,7 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
   return (
     <Card
       maxW="300px"
-      minH="500px"
+      minH="550px"
       color="gray.700"
       cursor="pointer"
       _hover={{ boxShadow: "2xl" }}
@@ -98,7 +100,13 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
             src={product.image}
           />
         </Center>
-        <Stack mt="6" spacing="2" textAlign="center">
+        <Flex
+          mt="6"
+          flexDirection="column"
+          gap={2}
+          height="212px"
+          textAlign="center"
+        >
           <Text>Shoes</Text>
           <Heading as="h3" fontSize="xl">
             {product.name}
@@ -114,6 +122,8 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
               {product.price}$
             </Text>
           </Box>
+
+          <Spacer />
           <Button
             colorScheme="teal"
             _hover={{ color: "white", bg: "teal.400" }}
@@ -121,7 +131,7 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
           >
             ADD TO CART!
           </Button>
-        </Stack>
+        </Flex>
       </CardBody>
     </Card>
   );

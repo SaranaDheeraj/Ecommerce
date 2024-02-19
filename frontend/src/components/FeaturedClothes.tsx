@@ -1,10 +1,10 @@
-import { Center, SimpleGrid } from "@chakra-ui/react";
-import useProducts from "../hooks/useProducts";
 import { Product } from "../interface";
+import useProducts from "../hooks/useProducts";
+import { Center, SimpleGrid } from "@chakra-ui/react";
 import ProductCard from "./ProductCard";
 
-const FeaturedShoes = () => {
-  const products: Product[] = useProducts("1");
+const FeaturedClothes = () => {
+  const products: Product[] = useProducts("2");
 
   return (
     <SimpleGrid minChildWidth="300px" gap={3}>
@@ -17,4 +17,4 @@ const FeaturedShoes = () => {
   );
 };
 
-export default FeaturedShoes;
+export default FeaturedClothes;

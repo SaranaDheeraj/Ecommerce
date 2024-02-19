@@ -88,7 +88,7 @@ const SignIn = () => {
           <Center>
             <Image
               width="sm"
-              src="https://images.unsplash.com/photo-1670121180583-39ab653a071c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nzh8fGdvb2RzfGVufDB8MHwwfHx8MA%3D%3D"
+              src="http://res.cloudinary.com/saranadheeraj/image/upload/v1708334831/rnc28upnaw6gwesqqssb.avif"
             />
           </Center>
           <Box p={4}>

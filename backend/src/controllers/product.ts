@@ -3,9 +3,19 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function allProducts(req: any, res: any) {
+  const { categoryId } = req.query;
   try {
-    const products = await prisma.products.findMany();
-    res.status(200).json(products);
+    if (categoryId) {
+      const products = await prisma.products.findMany({
+        where: {
+          categoryId: parseInt(categoryId),
+        },
+      });
+      res.status(200).json(products);
+    } else {
+      const products = await prisma.products.findMany();
+      res.status(200).json(products);
+    }
   } catch (e) {
     res.status(500).json({ msg: "failed to fetch products!" });
   }
@@ -69,11 +79,23 @@ async function allReviews(req: any, res: any) {
 }
 
 async function getThreeProducts(req: any, res: any) {
+  const { categoryId } = req.query;
+
   try {
-    const products = await prisma.products.findMany({
-      take: 3,
-    });
-    res.status(200).json(products);
+    if (categoryId) {
+      const products = await prisma.products.findMany({
+        take: 3,
+        where: {
+          categoryId: parseInt(categoryId),
+        },
+      });
+      res.status(200).json(products);
+    } else {
+      const products = await prisma.products.findMany({
+        take: 3,
+      });
+      res.status(200).json(products);
+    }
   } catch (error) {
     res.status(400).json({ msg: "Unable to retrieve products!" });
   }

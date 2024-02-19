@@ -8,6 +8,7 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import FeaturedShoes from "../components/FeaturedShoes";
+import FeaturedClothes from "../components/FeaturedClothes";
 
 const Section3 = () => {
   return (
@@ -28,7 +29,9 @@ const Section3 = () => {
               {/* <Product /> */}
               <FeaturedShoes />
             </TabPanel>
-            <TabPanel>Clothes</TabPanel>
+            <TabPanel>
+              <FeaturedClothes />
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>

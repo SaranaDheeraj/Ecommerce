@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp.tsx";
 import About from "./pages/About.tsx";
 import Contact from "./pages/Contact.tsx";
 import Account from "./pages/Account.tsx";
+import Products from "./pages/Products.tsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/account",
         element: <Account />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
       },
     ],
     // errorElement: <div>404 Page not found</div>,
