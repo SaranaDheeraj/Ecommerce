@@ -4,13 +4,13 @@ import { Product } from "../interface";
 import ProductCard from "./ProductCard";
 
 const FeaturedShoes = () => {
-  const products: Product[] = useProducts("1");
+  const { products, loading } = useProducts("1");
 
   return (
     <SimpleGrid minChildWidth="300px" gap={3}>
       {products.map((product) => (
         <Center key={product.id}>
-          <ProductCard product={product} />
+          <ProductCard product={product} title="shoes" />
         </Center>
       ))}
     </SimpleGrid>

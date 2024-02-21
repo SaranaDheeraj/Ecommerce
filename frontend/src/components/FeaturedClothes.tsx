@@ -4,13 +4,13 @@ import { Center, SimpleGrid } from "@chakra-ui/react";
 import ProductCard from "./ProductCard";
 
 const FeaturedClothes = () => {
-  const products: Product[] = useProducts("2");
+  const { products, loading } = useProducts("2");
 
   return (
     <SimpleGrid minChildWidth="300px" gap={3}>
       {products.map((product) => (
         <Center key={product.id}>
-          <ProductCard product={product} />
+          <ProductCard title="clothes" product={product} />
         </Center>
       ))}
     </SimpleGrid>

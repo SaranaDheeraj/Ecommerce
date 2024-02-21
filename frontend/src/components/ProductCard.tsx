@@ -8,7 +8,6 @@ import {
   Heading,
   Image,
   Spacer,
-  Stack,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -19,7 +18,13 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const ProductCard = ({ product }: { product: ProductInterface }) => {
+const ProductCard = ({
+  product,
+  title,
+}: {
+  product: ProductInterface;
+  title: string;
+}) => {
   const navigate = useNavigate();
   const signedIn = useRecoilValue(signedInState);
   const [items, setItems] = useRecoilState(cartItem);
@@ -107,7 +112,7 @@ const ProductCard = ({ product }: { product: ProductInterface }) => {
           height="212px"
           textAlign="center"
         >
-          <Text>Shoes</Text>
+          <Text>{title}</Text>
           <Heading as="h3" fontSize="xl">
             {product.name}
           </Heading>

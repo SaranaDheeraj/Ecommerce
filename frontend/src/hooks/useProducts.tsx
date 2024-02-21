@@ -4,14 +4,30 @@ import { Product } from "../interface";
 
 export default function useProducts(categoryId: string) {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     async function fetchProducts() {
-      const products = await axios.get(
-        `http://localhost:3000/products/limited?categoryId=${categoryId}`
-      );
-      setProducts(products.data);
+      setLoading(true);
+      try {
+        let response;
+        if (categoryId === "0") {
+          response = await axios.get(`http://localhost:3000/products`);
+        } else {
+          response = await axios.get(
+            `http://localhost:3000/products/limited?categoryId=${categoryId}`
+          );
+        }
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        // Handle error, e.g., setProducts([]) or display error message
+      } finally {
+        setLoading(false);
+      }
     }
     fetchProducts();
-  }, []);
-  return products;
+  }, [categoryId]); // Include categoryId in the dependency array
+
+  return { products, loading };
 }
