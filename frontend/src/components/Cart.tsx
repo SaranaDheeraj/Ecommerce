@@ -14,10 +14,43 @@ import {
 import { useRecoilValue } from "recoil";
 import { cartItem, total } from "../recoil/atom";
 import CartItem from "./CartItem";
+import { Stripe, loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 
 const Cart = ({ isOpen, onOpen, onClose, btnRef }) => {
   const items = useRecoilValue(cartItem);
   const totalPrice = useRecoilValue(total);
+
+  const makePayment = async () => {
+    try {
+      let stripe: Stripe | null = await loadStripe(
+        "pk_live_51OmXdJSE5BQVa8nr9wdsyM48v3DPxne19Ii2dm7BYwxIE15CHrenKAZf37wMrvCRYFsy0weqD0Raub8GqKAILEhU00785QLOLR"
+      );
+
+      if (stripe === null) {
+        throw new Error("Failed to load Stripe");
+      }
+
+      const response: any = await axios.post(
+        "http://localhost:3000/create-checkout-session",
+        {
+          items,
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.statusText}`);
+      }
+      const { data } = response;
+      const result = await stripe.redirectToCheckout({
+        sessionId: data.id,
+      });
+      if (result.error) {
+        console.log(result.error);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <Drawer
@@ -52,7 +85,9 @@ const Cart = ({ isOpen, onOpen, onClose, btnRef }) => {
           <Button variant="outline" mr={3} onClick={onClose}>
             close
           </Button>
-          <Button colorScheme="blue">Checkout</Button>
+          <Button colorScheme="blue" onClick={makePayment}>
+            Checkout
+          </Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

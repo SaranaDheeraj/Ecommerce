@@ -60,7 +60,7 @@ const ProductCard = ({
       );
 
       const itemIndex = items.findIndex(
-        (item) => item.id == response.data.exists.id
+        (item: any) => item.id == response.data.exists.id
       );
 
       if (itemIndex != -1) {
