@@ -22,9 +22,9 @@ const Products = () => {
   const filterProducts = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value.toLowerCase();
     let filtered: Product[] = [];
-    if (searchTerm === "shoes") {
+    if ("shoes".includes(searchTerm)) {
       filtered = products.filter((product) => product.categoryId === 1);
-    } else if (searchTerm === "clothes") {
+    } else if ("clothes".includes(searchTerm)) {
       filtered = products.filter((product) => product.categoryId === 2);
     } else if (searchTerm) {
       filtered = products.filter((product) =>
